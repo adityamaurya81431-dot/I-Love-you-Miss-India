@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Love ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+body{
+background:linear-gradient(135deg,#ff5fa2,#ff0033);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+color:white;
+text-align:center;
+}
+.screen{display:none;padding:20px;width:100%;}
+.active{display:block;}
+
+input{
+padding:12px;border:none;border-radius:20px;
+width:80%;font-size:16px;
+}
+
+button{
+margin-top:15px;
+padding:12px 25px;
+border:none;border-radius:25px;
+background:#ff3366;
+color:white;font-size:16px;
+box-shadow:0 0 10px pink;
+}
+
+#slideshow img{
+width:90%;
+border-radius:20px;
+box-shadow:0 0 15px pink;
+animation:fade 3s infinite;
+}
+
+@keyframes fade{
+0%{opacity:0;}
+20%{opacity:1;}
+80%{opacity:1;}
+100%{opacity:0;}
+}
+
+.heart{
+position:absolute;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{bottom:-20px;}
+100%{bottom:100%;opacity:0;}
+}
+
+.noBtn{position:absolute;}
+
+#ring{font-size:80px;animation:pulse 1.5s infinite;}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
+}
+
+.confetti{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+pointer-events:none;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 5px pink;}
+to{text-shadow:0 0 20px hotpink;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- YOUTUBE SONG -->
+<iframe id="ytplayer"
+src="https://www.youtube.com/embed/https://youtu.be/v0Pn2G6_4dY?si=15p3XbJIwFoMR8WY?autoplay=0&loop=1&playlist=VIDEO_ID_HERE"
+style="width:0;height:0;border:0;"></iframe>
+
+<!-- SCREEN 1 -->
+<div id="screen1" class="screen active">
+<h2>🔐 Enter Your Birthday Date Love</h2>
+<p>Hint: The day destiny smiled at me 💖</p>
+<input type="password" id="pass" placeholder="ddmmyyyy">
+<br>
+<button onclick="checkPass()">Unlock 💝</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div id="screen2" class="screen">
+<h1>This one for You Miss India 💖</h1>
+
+<p id="typeText"></p>
+
+<p id="lyric" style="margin-top:10px;font-style:italic;font-size:18px;color:#ffe6f0;animation:glow 2s infinite alternate;">
+🎵 cross my heart, hope to die 💖
+</p>
+
+<div id="slideshow">
+<img id="slide" src="photo1.jpg">
+</div>
+
+<p style="margin-top:10px;">From Your Love ~ Adityaa 💌</p>
+
+<button onclick="nextScreen()">Next 💕</button>
+</div>
+
+<!-- SCREEN 3 -->
+<div id="screen3" class="screen">
+<div id="ring">💍</div>
+<h2>Will You Be My Wife?</h2>
+<h3>Will You Be My Valentine?</h3>
+<br>
+<button onclick="yesClick()">YES 😍</button>
+<button id="noBtn" class="noBtn" onmouseover="moveNo()">NO 🙄</button>
+</div>
+
+<!-- SCREEN 4 -->
+<div id="screen4" class="screen">
+<h1>🎉 HURRAHHH!!! 🎉</h1>
+<h2>I Love You Forever ❤️</h2>
+<p>You are my today, tomorrow and always 💖</p>
+</div>
+
+<canvas id="confetti" class="confetti"></canvas>
+
+<script>
+let photos=[
+"photo1.jpg","photo2.jpg","photo3.jpg",
+"photo4.jpg","photo5.jpg","photo6.jpg",
+"photo7.jpg","photo8.jpg","photo9.jpg"
+];
+
+let index=0;
+let taps=0;
+let slide=document.getElementById("slide");
+
+function checkPass(){
+if(document.getElementById("pass").value==="04102007"){
+document.getElementById("screen1").classList.remove("active");
+document.getElementById("screen2").classList.add("active");
+
+let player=document.getElementById("ytplayer");
+player.src=player.src.replace("autoplay=0","autoplay=1");
+
+typeWriter();
+startSlideshow();
+}else{
+alert("Wrong date 😢 Try again love");
+}
+}
+
+let msg="You are the reason my heart learned how to smile... Every dream I see has only you in it. My world begins with you and ends with you. 💖";
+let i=0;
+function typeWriter(){
+if(i<msg.length){
+document.getElementById("typeText").innerHTML+=msg.charAt(i);
+i++;
+setTimeout(typeWriter,50);
+}
+}
+
+function startSlideshow(){
+setInterval(function(){
+index++;
+if(index>=photos.length){index=0;}
+slide.src=photos[index];
+},3000);
+}
+
+function nextScreen(){
+document.getElementById("screen2").classList.remove("active");
+document.getElementById("screen3").classList.add("active");
+}
+
+function moveNo(){
+let btn=document.getElementById("noBtn");
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+}
+
+function yesClick(){
+document.getElementById("screen3").classList.remove("active");
+document.getElementById("screen4").classList.add("active");
+fireworks();
+}
+
+function fireworks(){
+let canvas=document.getElementById("confetti");
+let ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let particles=[];
+for(let i=0;i<200;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*5+2,
+dx:Math.random()*4-2,
+dy:Math.random()*4-2
+});
+}
+setInterval(()=>{
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+ctx.fill();
+p.x+=p.dx;
+p.y+=p.dy;
+});
+},30);
+}
+
+document.body.addEventListener("click",()=>{
+taps++;
+if(taps===5){
+alert("💌 Secret Message: I choose you in every lifetime.");
+}
+});
+
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"%";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
+},500);
+</script>
+
+</body>
+</html>
